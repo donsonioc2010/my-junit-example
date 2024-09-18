@@ -3,6 +3,8 @@ package com.example.junitexample.domain.entity;
 import com.example.junitexample.domain.BaseEntity;
 import com.example.junitexample.domain.type.Department;
 import com.example.junitexample.domain.type.GenderType;
+import com.example.junitexample.domain.type.UserType;
+import com.example.junitexample.utils.UserInitUtils;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -25,6 +27,7 @@ import org.hibernate.annotations.Comment;
 @Table(name = "TBL_PROFESSOR")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Professor extends BaseEntity {
+
     @Id
     @Comment("교수ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,9 +39,6 @@ public class Professor extends BaseEntity {
     @Comment("패스워드")
     private String password;
 
-    @Comment("근무 시작일")
-    private LocalDate commissionDate;
-
     @Comment("이름")
     private String name;
 
@@ -46,17 +46,44 @@ public class Professor extends BaseEntity {
     private GenderType gender;
 
     @Comment("담당 전공 과목")
-    public Department department;
+    private Department department;
 
-
+    @Comment("근무 시작일")
+    private LocalDate commissionDate;
 
     // 강좌의 부모이기 떄문에 수정 허용한다. 고아객체 삭제는 하지 않음.
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Lecture> lectures = new ArrayList<>();
 
-
     /* ======== 생성자 ======== */
 
+    public Professor(
+        String name,
+        GenderType gender,
+        Department department,
+        LocalDate commissionDate
+    ) {
+        this.name = name;
+        this.gender = gender;
+        this.department = department;
+        this.commissionDate = commissionDate;
+    }
+
     /* ======== 비즈니스로직 ======== */
+    // 최초 회원가입시 계정 설정
+    public void defaultSetting(int totalProfessorCount) {
+        // 쿼리질의 결과가 0부터 오기 때문에, 1부터 시작하기 위한 카운트증가
+        totalProfessorCount++;
+
+        // 202402005-001, 002 등으로 변환이 됨
+        this.userId = String.format("%s%03d", UserInitUtils.ofLoginNumber(
+            UserType.STUDENT,
+            this.department,
+            this.commissionDate
+        ), totalProfessorCount);
+
+        this.password = UserInitUtils.defaultPassword();
+    }
+
 
 }
