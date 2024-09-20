@@ -20,6 +20,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 @Entity
 @Getter
@@ -67,17 +69,22 @@ public class Professor extends BaseEntity {
         this.gender = gender;
         this.department = department;
         this.commissionDate = commissionDate;
+        validate();
     }
 
     /* ======== 비즈니스로직 ======== */
     // 최초 회원가입시 계정 설정
     public void defaultSetting(int totalProfessorCount) {
+        if (totalProfessorCount < 0) {
+            throw new IllegalArgumentException("최소값이 0이하는 발생할 수 없습니다.");
+        }
+
         // 쿼리질의 결과가 0부터 오기 때문에, 1부터 시작하기 위한 카운트증가
         totalProfessorCount++;
 
         // 202402005-001, 002 등으로 변환이 됨
         this.userId = String.format("%s%03d", UserInitUtils.ofLoginNumber(
-            UserType.STUDENT,
+            UserType.PROFESSOR,
             this.department,
             this.commissionDate
         ), totalProfessorCount);
@@ -85,5 +92,14 @@ public class Professor extends BaseEntity {
         this.password = UserInitUtils.defaultPassword();
     }
 
-
+    // 생성자 값 검증
+    private void validate() {
+        if (!StringUtils.hasText(this.name) ||
+            ObjectUtils.isEmpty(this.gender) ||
+            ObjectUtils.isEmpty(this.department) ||
+            ObjectUtils.isEmpty(this.commissionDate)
+        ) {
+            throw new IllegalArgumentException("필수 입력해야 하는 값이 입력되지 않았습니다.");
+        }
+    }
 }
