@@ -1,4 +1,4 @@
-package com.example.lecture.controller;
+package com.example.junitexample.lecture.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
