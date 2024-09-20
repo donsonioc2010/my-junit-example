@@ -20,6 +20,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 @Entity
 @Getter
@@ -57,6 +59,7 @@ public class Lecture {
     public Lecture(String lectureName, Professor professor) {
         this.lectureName = lectureName;
         this.professor = professor;
+        validate();
     }
 
     /* ======== 비즈니스로직 ======== */
@@ -98,5 +101,11 @@ public class Lecture {
             .filter(lecture -> lectureTime.getId().equals(lecture.getId()))
             .findFirst()
             .ifPresent(lecture -> this.lectureTimes.remove(lecture));
+    }
+
+    private void validate() {
+        if (!StringUtils.hasText(this.lectureName) || ObjectUtils.isEmpty(this.professor)) {
+            throw new IllegalArgumentException("강좌명과 담임교수는 필수입니다.");
+        }
     }
 }

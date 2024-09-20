@@ -74,7 +74,7 @@ public class Professor extends BaseEntity {
 
     /* ======== 비즈니스로직 ======== */
     // 최초 회원가입시 계정 설정
-    public void defaultSetting(int totalProfessorCount) {
+    public void defaultSetting(long totalProfessorCount) {
         if (totalProfessorCount < 0) {
             throw new IllegalArgumentException("최소값이 0이하는 발생할 수 없습니다.");
         }
