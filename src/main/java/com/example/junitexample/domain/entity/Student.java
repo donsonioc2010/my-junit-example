@@ -97,7 +97,7 @@ public class Student extends BaseEntity {
     }
     // TODO : 수강신청 취소(삭제)는 안만듬
 
-    // 값 검증
+    // 생성자 값 검증
     private void validate() {
         if (!StringUtils.hasText(this.name) ||
             ObjectUtils.isEmpty(this.gender) ||

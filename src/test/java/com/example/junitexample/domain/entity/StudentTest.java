@@ -4,6 +4,7 @@ import com.example.junitexample.domain.type.Department;
 import com.example.junitexample.domain.type.GenderType;
 import com.example.junitexample.utils.UserInitUtils;
 import java.time.LocalDate;
+import java.time.Month;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +27,7 @@ class StudentTest {
         @DisplayName("학생객체를 생성시, 이름이 Null인 경우, 객체가 생성되지 않는다")
         void studentConstructor_givenNameIsNull_thenThrowsException() {
             // given
-            LocalDate mockEntranceAt = LocalDate.now();
+            LocalDate mockEntranceAt = LocalDate.of(2024, Month.AUGUST, 22);
 
             // when && then
             Assertions.assertThrows(IllegalArgumentException.class,
@@ -41,7 +42,7 @@ class StudentTest {
         @DisplayName("학생객체를 생성시, 이름이 빈 공백인 경우, 객체가 생성되지 않는다")
         void studentConstructor_givenNameIsBlank_thenThrowsException(String studentName) {
             // given
-            LocalDate mockEntranceAt = LocalDate.now();
+            LocalDate mockEntranceAt = LocalDate.of(2024, Month.AUGUST, 22);
 
             // when && then
             Assertions.assertThrows(IllegalArgumentException.class,
@@ -55,7 +56,7 @@ class StudentTest {
         @DisplayName("학생객체를 생성시, 성별이 Null인 경우, 객체가 생성되지 않는다")
         void studentConstructor_givenGenderIsNull_thenThrowsException() {
             // given
-            LocalDate mockEntranceAt = LocalDate.now();
+            LocalDate mockEntranceAt = LocalDate.of(2024, Month.AUGUST, 22);
             String mockStudentName = "테스트";
 
             // when && then
@@ -85,7 +86,7 @@ class StudentTest {
         @DisplayName("학생객체를 생성시, 과목이 Null인 경우, 객체가 생성되지 않는다")
         void studentConstructor_givenDepartmentAtIsNull_thenThrowsException() {
             // given
-            LocalDate mockEntranceAt = LocalDate.now();
+            LocalDate mockEntranceAt = LocalDate.of(2024, Month.AUGUST, 22);
             String mockStudentName = "테스트";
 
             // when && then
@@ -99,7 +100,7 @@ class StudentTest {
         @DisplayName("모든 값이 존재하는 경우 정상적으로 객체 생성이 가능하다.")
         void studentConstructor_givenAllValueSuccess_thenCreateObject() {
             // given
-            LocalDate mockEntranceAt = LocalDate.now();
+            LocalDate mockEntranceAt = LocalDate.of(2024, Month.AUGUST, 22);
             String mockStudentName = "테스트";
 
             // when
@@ -121,7 +122,7 @@ class StudentTest {
         void setUp() {
             String mockStudentName = "테스트";
             GenderType mockGender = GenderType.MAN;
-            LocalDate mockEntranceAt = LocalDate.now();
+            LocalDate mockEntranceAt = LocalDate.of(2024, Month.AUGUST, 22);
             Department mockDepartment = Department.COMPUTER_SCIENCE;
 
             this.mockStudent = new Student(
