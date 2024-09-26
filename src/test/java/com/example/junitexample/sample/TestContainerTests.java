@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.containers.MySQLContainerProvider;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 
@@ -17,7 +18,7 @@ import org.testcontainers.junit.jupiter.Container;
 
 @Slf4j
 @DisplayName("테스트 컨테이너 테스트")
-public class TestContainerTests {
+class TestContainerTests {
 
     // MySQL 컨테이너 (기존 DB라 가정), 포트는 외부포트 랜덤생성, 내부 3306고정, 근데 이미 내부 초기값 디폴트설정임 :)
     @Container
@@ -61,7 +62,7 @@ public class TestContainerTests {
 
     @Test
     @DisplayName("DB 스위칭 테스트")
-    public void databaseSwitchingTest() throws SQLException {
+    void databaseSwitchingTest() throws SQLException {
         Assertions.assertTrue(connection.isValid(2));
         log.info("MySQL연결 성공!");
 

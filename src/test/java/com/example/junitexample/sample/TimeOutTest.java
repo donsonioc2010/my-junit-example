@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 @Slf4j
 @DisplayName("TimeOut Test Samples")
-public class TimeOutTest {
+class TimeOutTest {
     @Test
     @DisplayName("1초 이내로 실행되면 테스트 케이스는 성공한다.")
     void whenIn1Sec_thenTestCaseSuccess() {
@@ -20,9 +20,7 @@ public class TimeOutTest {
             int zeroOneHundred = IntStream.range(0, 100).sum();
             log.info("0 ~ 100 합은? >>> {}", zeroOneHundred);
             long totalTime = System.currentTimeMillis() - startTime;
-
             log.info("타임아웃 성공케이스 종료~, Total 소요시간 >>> {} millSeconds", Duration.ofSeconds(totalTime).getSeconds());
-
         });
     }
 

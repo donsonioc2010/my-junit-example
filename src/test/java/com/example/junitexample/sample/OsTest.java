@@ -9,7 +9,7 @@ import org.junit.jupiter.api.condition.OS;
 
 @Slf4j
 @DisplayName("각 OS환경에 맞는 테스트 지원")
-public class OsTest {
+class OsTest {
     @Test
     @EnabledOnOs(OS.MAC)
     @DisplayName("Mac인 경우에만 실행됩니다.")
